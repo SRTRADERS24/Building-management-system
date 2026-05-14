@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMS - Secure Login</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styling for the radio toggle */
+        input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(139, 92, 246, 0.6));
+            border-color: #60a5fa;
+            color: white;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Password visibility toggle */
+        .password-toggle {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Animated background */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Form input focus effect */
+        input:focus {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Loading animation */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center p-4 overflow-hidden">
+
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl floating"></div>
+        <div class="absolute bottom-20 right-10 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl floating" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl floating" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- Background Overlay -->
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <!-- Login Container -->
+    <div class="relative z-10 w-full max-w-md">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden hover:border-white/30 transition-all duration-300">
+
+            <!-- Header with Icon -->
+            <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-8 text-center relative overflow-hidden">
+                <!-- Background gradient effect -->
+                <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center border-4 border-white/40 shadow-xl hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-building text-white text-5xl"></i>
+                    </div>
+                    <h1 class="text-4xl font-bold text-white mb-1">BMS Portal</h1>
+                    <p class="text-blue-100 text-sm tracking-wide">Professional Building Management System</p>
+                </div>
+            </div>
+
+            <!-- Main Form Section -->
+            <div class="p-8 space-y-6">
+                
+                <!-- Role Selector with Icons -->
+                <div>
+                    <label class="block text-white font-semibold mb-3 text-sm flex items-center">
+                        <i class="fas fa-user-check mr-2 text-blue-400"></i>Select Your Role
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="relative">
+                            <input type="radio" id="roleResident" name="role" value="resident" class="hidden" checked>
+                            <label for="roleResident" class="block text-center py-3 px-4 rounded-xl border border-white/10 bg-white/5 text-gray-300 cursor-pointer transition-all hover:bg-white/10 duration-200">
+                                <i class="fas fa-home text-lg mb-1 block"></i>
+                                <span class="text-sm font-medium">Resident</span>
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input type="radio" id="roleManager" name="role" value="manager" class="hidden">
+                            <label for="roleManager" class="block text-center py-3 px-4 rounded-xl border border-white/10 bg-white/5 text-gray-300 cursor-pointer transition-all hover:bg-white/10 duration-200">
+                                <i class="fas fa-users-cog text-lg mb-1 block"></i>
+                                <span class="text-sm font-medium">Manager</span>
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input type="radio" id="roleAdmin" name="role" value="admin" class="hidden">
+                            <label for="roleAdmin" class="block text-center py-3 px-4 rounded-xl border border-white/10 bg-white/5 text-gray-300 cursor-pointer transition-all hover:bg-white/10 duration-200">
+                                <i class="fas fa-shield-alt text-lg mb-1 block"></i>
+                                <span class="text-sm font-medium">Admin</span>
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input type="radio" id="roleStaff" name="role" value="staff" class="hidden">
+                            <label for="roleStaff" class="block text-center py-3 px-4 rounded-xl border border-white/10 bg-white/5 text-gray-300 cursor-pointer transition-all hover:bg-white/10 duration-200">
+                                <i class="fas fa-wrench text-lg mb-1 block"></i>
+                                <span class="text-sm font-medium">Staff</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Fields -->
+                <form id="loginForm" class="space-y-5">
+                    
+                    <!-- Email/Username -->
+                    <div>
+                        <label class="block text-white font-semibold mb-2 text-sm flex items-center">
+                            <i class="fas fa-envelope mr-2 text-blue-400"></i>Email or Username
+                        </label>
+                        <input type="text" id="username" name="username" placeholder="Enter your email or username" required
+                            class="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200" />
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label class="block text-white font-semibold mb-2 text-sm flex items-center">
+                            <i class="fas fa-lock mr-2 text-blue-400"></i>Password
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" placeholder="••••••••" required
+                                class="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 pr-12" />
+                            <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors password-toggle" onclick="togglePasswordVisibility()">
+                                <i class="fas fa-eye text-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between pt-2">
+                        <label class="flex items-center text-gray-300 cursor-pointer hover:text-white transition">
+                            <input type="checkbox" class="mr-2 rounded bg-white/10 border-white/20 cursor-pointer accent-blue-500" /> 
+                            <span class="text-xs">Remember Me</span>
+                        </label>
+                        <a href="#" class="text-xs text-blue-400 hover:text-blue-300 transition duration-200">
+                            <i class="fas fa-question-circle mr-1"></i>Forgot Password?
+                        </a>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" id="loginBtn"
+                        class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg shadow-lg hover:shadow-2xl hover:brightness-110 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group">
+                        <i class="fas fa-sign-in-alt group-hover:translate-x-1 transition-transform"></i>
+                        <span>Sign In</span>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-white/10"></div>
+                    </div>
+                    <div class="relative flex justify-center text-xs">
+                        <span class="px-2 bg-white/5 text-gray-400">or continue with</span>
+                    </div>
+                </div>
+
+                <!-- Alternative Login Options -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" class="py-2 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-2">
+                        <i class="fab fa-google text-red-400"></i>
+                        <span>Google</span>
+                    </button>
+                    <button type="button" class="py-2 px-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-2">
+                        <i class="fab fa-microsoft text-blue-500"></i>
+                        <span>Azure</span>
+                    </button>
+                </div>
+
+                <!-- Sign Up Link -->
+                <p class="text-center text-gray-400 text-xs">
+                    Don't have an account? 
+                    <a href="#" class="text-blue-400 hover:text-blue-300 font-semibold transition">Sign up here</a>
+                </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="bg-white/5 border-t border-white/10 px-8 py-4 text-center">
+                <p class="text-gray-400 text-xs mb-2">© 2026 Building Management System. All Rights Reserved.</p>
+                <div class="flex gap-4 justify-center text-xs text-gray-500">
+                    <a href="#" class="hover:text-gray-300 transition">Privacy Policy</a>
+                    <span>•</span>
+                    <a href="#" class="hover:text-gray-300 transition">Terms of Service</a>
+                    <span>•</span>
+                    <a href="#" class="hover:text-gray-300 transition">Contact Support</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Info -->
+        <div class="mt-6 p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xl">
+            <div class="flex items-start gap-3">
+                <i class="fas fa-shield-alt text-green-400 text-lg mt-1"></i>
+                <div class="text-xs text-gray-300">
+                    <p class="font-semibold text-white mb-1">🔒 Secure Connection</p>
+                    <p>Your login credentials are encrypted and transmitted securely over HTTPS.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Password Visibility
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.classList.remove('fa-eye');
+                toggleBtn.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.classList.remove('fa-eye-slash');
+                toggleBtn.classList.add('fa-eye');
+            }
+        }
+
+        // Login Form Handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const role = document.querySelector('input[name="role"]:checked').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+
+            // Validation
+            if (!username || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner animate-spin"></i><span>Signing in...</span>';
+
+            // Simulate API call
+            setTimeout(() => {
+                console.log(`Login Attempt - Role: ${role}, Username: ${username}`);
+                
+                // Demo credentials
+                const demoUsers = {
+                    'resident': { username: 'james.brown@email.com', password: 'password123' },
+                    'manager': { username: 'john.manager@bms.com', password: 'password123' },
+                    'admin': { username: 'admin', password: 'admin123' },
+                    'staff': { username: 'mike.maintenance@bms.com', password: 'password123' }
+                };
+
+                const demoUser = demoUsers[role];
+
+                if (demoUser && username === demoUser.username && password === demoUser.password) {
+                    // Success
+                    localStorage.setItem('userRole', role);
+                    localStorage.setItem('username', username);
+                    
+                    // Redirect based on role
+                    const redirectMap = {
+                        'resident': 'user-dashboard.html',
+                        'manager': 'manager-dashboard.html',
+                        'admin': 'admin-dashboard.html',
+                        'staff': 'staff-dashboard.html'
+                    };
+
+                    window.location.href = redirectMap[role] || 'dashboard.html';
+                } else {
+                    // Failed
+                    alert(`Invalid credentials for ${role} role.\n\nDemo ${role} credentials:\nUsername: ${demoUser.username}\nPassword: ${demoUser.password}`);
+                    
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Sign In</span>';
+                }
+            }, 1500);
+        });
+
+        // Demo credentials display on role change
+        document.querySelectorAll('input[name="role"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const demoCredentials = {
+                    'resident': 'james.brown@email.com / password123',
+                    'manager': 'john.manager@bms.com / password123',
+                    'admin': 'admin / admin123',
+                    'staff': 'mike.maintenance@bms.com / password123'
+                };
+                console.log(`Try: ${demoCredentials[this.value]}`);
+            });
+        });
+    </script>
+</body>
+</html>
