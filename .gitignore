@@ -1,0 +1,111 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+*.class
+
+# Maven
+target/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+build/
+.gradle/
+*.gradle
+
+# Spring Boot
+spring-boot-devtools.properties
+
+# Log files
+*.log
+logs/
+
+# Database
+*.sql.orig
+*.sqlite
+*.db
+
+# OS
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node (if using npm for frontend tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Package managers
+*.lock
+*.lock.json
+
+# Compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE specific files
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Build output
+bin/
+out/
+dist/
+build/
+
+# Test coverage
+jacoco.exec
+coverage/
+
+# Application logs
+application.log
+error.log
+
+# IDE workspace
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/misc.xml
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+desktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
